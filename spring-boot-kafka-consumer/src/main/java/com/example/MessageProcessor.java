@@ -49,6 +49,7 @@ public class MessageProcessor {
 
 				for (String v : values) {
 					System.out.println("Partition ["+ partition +"], Topic ["+ key +"], Data [" +v+"]" );
+
 					
 //					if (v.getClass().getName().contains("Vote")) {
 //						System.out.println("the type of the object is : " + v.getClass().getName() + "  ");
