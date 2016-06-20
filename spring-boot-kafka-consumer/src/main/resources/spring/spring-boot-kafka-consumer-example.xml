@@ -61,8 +61,8 @@
 
 	<!-- Consumer -->
 	<bean id="voteDecoder"
-		class="org.springframework.integration.kafka.serializer.avro.AvroReflectDatumBackedKafkaDecoder">
-		<constructor-arg value="com.example.Vote" />
+		class="org.springframework.integration.kafka.serializer.common.StringDecoder">
+<!-- 		<constructor-arg value="" /> -->
 	</bean>
 
 	<int-kafka:consumer-context id="consumerContext"
