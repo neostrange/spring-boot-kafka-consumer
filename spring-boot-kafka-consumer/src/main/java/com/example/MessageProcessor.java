@@ -37,7 +37,7 @@ public class MessageProcessor {
 	public void processKafkaVoteMessage(Map<String, Map<Integer, List<String>>> payload) {
 		String key = null;
 		for (String item : payload.keySet()) {
-			key = (String) item; // topic
+			key = (String) item; 
 
 			Map<Integer, List<String>> messages = payload.get(key);
 			// Integer i;
