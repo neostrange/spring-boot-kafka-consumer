@@ -41,7 +41,8 @@ public class MessageProcessor {
 
 			Map<Integer, List<String>> messages = payload.get(key);
 			// Integer i;
-			for (Integer partition : messages.keySet()) { // partitions
+			for (Integer partition : messages.keySet()) { 
+				// partitions
 
 				List<String> values = (List<String>) messages.get(partition);
 
