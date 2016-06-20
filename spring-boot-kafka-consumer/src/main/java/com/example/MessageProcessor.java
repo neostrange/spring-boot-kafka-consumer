@@ -43,8 +43,6 @@ public class MessageProcessor {
 			// Integer i;
 			for (Integer partition : messages.keySet()) { // partitions
 
-				// i = (Integer)partition;
-
 				List<String> values = (List<String>) messages.get(partition);
 
 				for (String v : values) {
