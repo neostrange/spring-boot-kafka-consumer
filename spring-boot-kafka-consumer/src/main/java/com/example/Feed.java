@@ -5,46 +5,54 @@ import java.util.Date;
 import java.util.Map;
 
 public class Feed implements Serializable {
-	
-	
-	public enum TTPType{C2, MALWARE, SCANNING, WEB, SSH};
-	
-	public enum SuggestedCOA{BLOCK, MONITOR};
-	
-	public enum Type{IP, MD5, URL};
-	
+
+	public enum TTPType {
+		C2, MALWARE, SCANNING, WEB, SSH
+	};
+
+	public enum SuggestedCOA {
+		BLOCK, MONITOR
+	};
+
+	public enum Type {
+		IP, MD5, URL
+	};
+
+//	private String id;
+
 	private String indicator;
-	
-	private String type; 
-	
+
+	private String type;
+
 	private String title;
-	
+
 	private String description;
-	
+
 	private String firstSeen;
-	
+
 	private String lastSeen;
-	
+
 	private Date timestamp;
-	
+
 	private String validityPeriod;
-	
+
 	private float riskFactor;
-	
+
 	private float confidence;
-	
+
 	private IncidentStats incidentStats;
-	
+
 	private String source;
-	
+
 	private String tlpLevel;
-	
+
 	private TTPType ttpType;
-	
+
 	private SuggestedCOA suggestedCOA;
 
-	public Feed(){}
-	
+	public Feed() {
+	}
+
 	public Feed(String indicator, String type, String firstSeen, String lastSeen, String timestamp) {
 		this.indicator = indicator;
 		this.type = type;
@@ -172,9 +180,12 @@ public class Feed implements Serializable {
 		this.suggestedCOA = suggestedCOA;
 	}
 
-	
-	
-	
-	
+//	public String getId() {
+//		return id;
+//	}
+//
+//	public void setId(String id) {
+//		this.id = id;
+//	}
 
 }

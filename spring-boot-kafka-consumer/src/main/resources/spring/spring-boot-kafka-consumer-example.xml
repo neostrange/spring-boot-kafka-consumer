@@ -76,13 +76,18 @@
 		</int-kafka:consumer-configurations>
 	</int-kafka:consumer-context>
 
+
+
 	<!-- redis connection factory -->
 	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:host-name="localhost" p:port="6379"/>
+		p:host-name="localhost" p:port="6379" />
 	<!-- redis template definition -->
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
 		p:connection-factory-ref="jedisConnectionFactory" />
 
+
+
+	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
 
 </beans>

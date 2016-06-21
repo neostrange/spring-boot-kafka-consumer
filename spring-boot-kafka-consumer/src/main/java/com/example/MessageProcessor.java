@@ -11,11 +11,17 @@ import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.Message;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MessageProcessor {
 
 	@Autowired
 	FeedRepository feedRepo;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
+	
+	
 	
 	public static Calendar calendar = Calendar.getInstance();
 	
@@ -68,7 +74,7 @@ public class MessageProcessor {
 
 					JsonNode node = null;
 					try {
-						node = CustomObjectMapper.getInstance().readTree(v);
+						node = objectMapper.readTree(v);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
