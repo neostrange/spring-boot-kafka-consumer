@@ -1,10 +1,16 @@
-package com.example;
+package com.example.model;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
+
 public class Feed implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7996275520964690026L;
 
 	public enum TTPType {
 		C2, MALWARE, SCANNING, WEB, SSH

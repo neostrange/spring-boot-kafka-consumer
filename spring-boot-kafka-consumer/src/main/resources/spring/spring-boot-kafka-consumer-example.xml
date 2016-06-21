@@ -26,7 +26,7 @@
 	</int:service-activator>
 
 	<task:executor id="task-executor" pool-size="10" />
-	<bean id="messageProcessor" class="com.example.MessageProcessor" />
+	<bean id="messageProcessor" class="com.example.feedgeneration.MessageProcessor" />
 
 
 
@@ -48,7 +48,7 @@
 		zk-session-timeout="6000" zk-sync-time="2000" />
 
 
-	<bean id="kafkaThreadListener" class="com.example.KafkaConsumerStarter"
+	<bean id="kafkaThreadListener" class="com.example.kafkaconsumer.KafkaConsumerStarter"
 		init-method="initIt" destroy-method="cleanUp" />
 
 	<int-kafka:inbound-channel-adapter

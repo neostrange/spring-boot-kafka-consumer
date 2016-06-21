@@ -1,4 +1,6 @@
-package com.example;
+package com.example.dao;
+
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -6,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.example.model.Feed;
 
 @Repository
 public class FeedRepositoryImpl implements FeedRepository {
@@ -39,6 +43,13 @@ public class FeedRepositoryImpl implements FeedRepository {
 		
 		 hashOps.put(KEY, feed.getIndicator(), feed);
 
+	}
+
+	@Override
+	public Map<Object, Object> findAllFeeds() {
+		// TODO Auto-generated method stub
+		
+		return hashOps.entries(KEY);
 	}
 
 }

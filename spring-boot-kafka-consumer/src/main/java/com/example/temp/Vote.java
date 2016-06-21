@@ -1,5 +1,6 @@
-package com.example;
+package com.example.temp;
 
+import com.example.model.Ipojo;
 
 public class Vote implements Ipojo{
     private String name;

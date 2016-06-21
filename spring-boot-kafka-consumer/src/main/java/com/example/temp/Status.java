@@ -1,4 +1,4 @@
-package com.example;
+package com.example.temp;
 
 public class Status {
 	private String status;

@@ -1,4 +1,4 @@
-package com.example;
+package com.example.kafkaconsumer;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

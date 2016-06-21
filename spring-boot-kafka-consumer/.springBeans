@@ -10,7 +10,6 @@
 		<config>src/main/resources/spring/spring-boot-kafka-consumer-example.xml</config>
 	</configs>
 	<autoconfigs>
-		<config>java:com.example.SpringBootKafkaConsumerApplication</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

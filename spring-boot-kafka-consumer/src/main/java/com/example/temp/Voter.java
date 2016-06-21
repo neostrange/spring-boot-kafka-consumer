@@ -1,4 +1,6 @@
-package com.example;
+package com.example.temp;
+
+import com.example.model.Ipojo;
 
 public class Voter implements Ipojo {
 

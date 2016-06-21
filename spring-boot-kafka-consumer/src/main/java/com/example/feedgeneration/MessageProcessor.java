@@ -1,4 +1,4 @@
-package com.example;
+package com.example.feedgeneration;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.Message;
 
+import com.example.dao.FeedRepository;
+import com.example.model.Feed;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
