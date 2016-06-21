@@ -94,7 +94,8 @@ public class MessageProcessor {
 						System.out.println("IP [" + ip + "]");
 					}
 					if (node.has("download")) {
-						md5 = node.get("download").get("md5Hash").asText();
+						md5 = node.get("download").get(0).get("md5Hash").asText();
+						
 						tmpFeed = feedRepo.findFeed(md5);
 						if (tmpFeed != null) {
 							System.out.println("FOUND IT!:" + tmpFeed.getIndicator());
@@ -105,7 +106,7 @@ public class MessageProcessor {
 							feedRepo.saveFeed(tmpFeed);
 						}
 						//url
-						url = node.get("download").get("url").asText();
+						url = node.get("download").get(0).get("url").asText();
 						tmpFeed = feedRepo.findFeed(url);
 						if (tmpFeed != null) {
 							System.out.println("FOUND IT!:" + tmpFeed.getIndicator());
