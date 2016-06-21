@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:int="http://www.springframework.org/schema/integration"
 	xmlns:int-kafka="http://www.springframework.org/schema/integration/kafka"
-	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
@@ -62,7 +62,7 @@
 	<!-- Consumer -->
 	<bean id="voteDecoder"
 		class="org.springframework.integration.kafka.serializer.common.StringDecoder">
-<!-- 		<constructor-arg value="" /> -->
+		<!-- <constructor-arg value="" /> -->
 	</bean>
 
 	<int-kafka:consumer-context id="consumerContext"
@@ -70,11 +70,19 @@
 		consumer-properties="consumerProperties">
 		<int-kafka:consumer-configurations>
 			<int-kafka:consumer-configuration
-				group-id="default" max-messages="50" value-decoder="voteDecoder">
+				group-id="default" max-messages="500" value-decoder="voteDecoder">
 				<int-kafka:topic id="${topic}" streams="1" />
 			</int-kafka:consumer-configuration>
 		</int-kafka:consumer-configurations>
 	</int-kafka:consumer-context>
+
+	<!-- redis connection factory -->
+	<bean id="jedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+		p:host-name="localhost" p:port="6379"/>
+	<!-- redis template definition -->
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+		p:connection-factory-ref="jedisConnectionFactory" />
 
 
 </beans>
