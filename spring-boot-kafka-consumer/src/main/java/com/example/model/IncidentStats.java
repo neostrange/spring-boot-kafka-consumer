@@ -4,19 +4,19 @@ import java.io.Serializable;
 
 public class IncidentStats implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final double serialVersionUID = 1L;
 
-	private long sev1;
+	private double sev1;
 
-	private long sev2;
+	private double sev2;
 
-	private long sev3;
+	private double sev3;
 
-	private long sev4;
+	private double sev4;
 
-	private long sev5;
+	private double sev5;
 
-	private long total;
+	private double total;
 
 	public IncidentStats() {
 		this.sev1 = 0;
@@ -27,7 +27,7 @@ public class IncidentStats implements Serializable {
 		this.total = 0;
 	}
 
-	public IncidentStats(long sev1, long sev2, long sev3, long sev4, long sev5, long total) {
+	public IncidentStats(double sev1, double sev2, double sev3, double sev4, double sev5, double total) {
 		super();
 		this.sev1 = sev1;
 		this.sev2 = sev2;
@@ -37,82 +37,90 @@ public class IncidentStats implements Serializable {
 		this.total = total;
 	}
 
-
-
-	public long getSev1() {
+	public double getSev1() {
 		return sev1;
 	}
 
 	public void incrSev1() {
 		this.sev1 += 1;
 	}
-	
-	public void setSev1(long sev1) {
+
+	public void setSev1(double sev1) {
 		this.sev1 = sev1;
 	}
 
-	public long getSev2() {
+	public double getSev2() {
 		return sev2;
 	}
-	
+
 	public void incrSev2() {
 		this.sev2 += 1;
 	}
 
-	public void setSev2(long sev2) {
+	public void setSev2(double sev2) {
 		this.sev2 = sev2;
 	}
 
-	public long getSev3() {
+	public double getSev3() {
 		return sev3;
 	}
-	
+
 	public void incrSev3() {
 		this.sev3 += 1;
 	}
 
-	public void setSev3(long sev3) {
+	public void setSev3(double sev3) {
 		this.sev3 = sev3;
 	}
 
-	public long getSev4() {
+	public double getSev4() {
 		return sev4;
 	}
-	
+
 	public void incrSev4() {
 		this.sev4 += 1;
 	}
 
-	public void setSev4(long sev4) {
+	public void setSev4(double sev4) {
 		this.sev4 = sev4;
 	}
 
-	public long getSev5() {
+	public double getSev5() {
 		return sev5;
 	}
 
 	public void incrSev5() {
 		this.sev5 += 1;
 	}
-	
-	public void setSev5(long sev5) {
+
+	public void setSev5(double sev5) {
 		this.sev5 = sev5;
 	}
 
-	public long getTotal() {
+	public double getTotal() {
 		return total;
 	}
-	
+
 	public void incrTotal() {
 		this.total += 1;
 	}
 
-	public void setTotal(long total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
-	
-	public double riskFactor(){
-		return (sev1 * (0.1) + sev2 * (0.1) + sev3 * (0.2) + sev4 * (0.3) + sev5 * (0.3)) * 5;
+
+	@Override
+	public String toString() {
+		return "{sev1 [" + sev1 + "], sev2 [" + sev2 + "], sev3 [" + sev3 + "], sev4 [" + sev4 + "], sev5 [" + sev5
+				+ "], total [" + total + "]}";
+	}
+
+	public double riskAverage() {
+		// return ((sev1/total * ( 10 * 10) + sev2/total * (10 * 20) +
+		// sev3/total * ( 10 * 30) + sev4/total * (10 * 40) + sev5/total * (10 *
+		// 50))/(50));
+		return (sev1 * (5*1) + sev2 * (5*2) + sev3 * (5*3) + sev4 * (5*4) + sev5 * (5*5))/(5*total);
+
 	}
 
 }
