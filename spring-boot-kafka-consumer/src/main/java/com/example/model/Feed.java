@@ -1,9 +1,6 @@
 package com.example.model;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Map;
-
 
 public class Feed implements Serializable {
 
@@ -36,13 +33,13 @@ public class Feed implements Serializable {
 
 	private String lastSeen;
 
-	private Date timestamp;
+	private String timestamp;
 
 	private String validityPeriod;
 
-	private float riskFactor;
+	private double riskFactor;
 
-	private float confidence;
+	private double confidence;
 
 	private IncidentStats incidentStats;
 
@@ -51,6 +48,8 @@ public class Feed implements Serializable {
 	private String tlpLevel;
 
 	private TTPType ttpType;
+	
+	private ThreatType threatType;
 
 	private SuggestedCOA suggestedCOA;
 
@@ -62,6 +61,7 @@ public class Feed implements Serializable {
 		this.type = type;
 		this.firstSeen = firstSeen;
 		this.lastSeen = lastSeen;
+		this.timestamp = timestamp;
 		this.incidentStats = new IncidentStats();
 	}
 
@@ -97,12 +97,13 @@ public class Feed implements Serializable {
 		this.description = description;
 	}
 
+		
 	public String getFirstSeen() {
 		return firstSeen;
 	}
 
-	public String setFirstSeen(String firstSeen) {
-		return this.firstSeen = firstSeen;
+	public void setFirstSeen(String firstSeen) {
+		this.firstSeen = firstSeen;
 	}
 
 	public String getLastSeen() {
@@ -113,11 +114,11 @@ public class Feed implements Serializable {
 		this.lastSeen = lastSeen;
 	}
 
-	public Date getTimestamp() {
+	public String getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(String timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -129,19 +130,19 @@ public class Feed implements Serializable {
 		this.validityPeriod = validityPeriod;
 	}
 
-	public float getRiskFactor() {
+	public double getRiskFactor() {
 		return riskFactor;
 	}
 
-	public void setRiskFactor(float riskFactor) {
+	public void setRiskFactor(double riskFactor) {
 		this.riskFactor = riskFactor;
 	}
 
-	public float getConfidence() {
+	public double getConfidence() {
 		return confidence;
 	}
 
-	public void setConfidence(float confidence) {
+	public void setConfidence(double confidence) {
 		this.confidence = confidence;
 	}
 
@@ -176,6 +177,14 @@ public class Feed implements Serializable {
 	public void setTtpType(TTPType ttpType) {
 		this.ttpType = ttpType;
 	}
+	
+	public ThreatType getThreatType() {
+		return threatType;
+	}
+
+	public void setThreatType(ThreatType threatType) {
+		this.threatType = threatType;
+	}
 
 	public SuggestedCOA getSuggestedCOA() {
 		return suggestedCOA;
@@ -184,5 +193,7 @@ public class Feed implements Serializable {
 	public void setSuggestedCOA(SuggestedCOA suggestedCOA) {
 		this.suggestedCOA = suggestedCOA;
 	}
+
+
 
 }
