@@ -4,6 +4,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -13,6 +15,8 @@ import com.example.model.Feed;
 
 @Repository
 public class FeedRepositoryImpl implements FeedRepository {
+	
+	public static final Logger log = LoggerFactory.getLogger(FeedRepositoryImpl.class);
 
 	private static final String KEY = "Feed";
 	private HashOperations hashOps;
@@ -27,7 +31,7 @@ public class FeedRepositoryImpl implements FeedRepository {
 
 	@Override
 	public Feed findFeed(String id) {
-
+		log.info("Find feed with id [{}]", id);
 		return (Feed) hashOps.get(KEY, id);
 	}
 
@@ -47,7 +51,6 @@ public class FeedRepositoryImpl implements FeedRepository {
 
 	@Override
 	public Map<Object, Object> findAllFeeds() {
-		// TODO Auto-generated method stub
 		
 		return hashOps.entries(KEY);
 	}

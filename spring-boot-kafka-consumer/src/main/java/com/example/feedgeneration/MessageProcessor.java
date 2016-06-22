@@ -1,6 +1,7 @@
 package com.example.feedgeneration;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -12,8 +13,8 @@ import org.springframework.messaging.Message;
 
 import com.example.dao.FeedRepository;
 import com.example.model.Feed;
+import com.example.utils.CustomObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MessageProcessor {
 
@@ -21,13 +22,11 @@ public class MessageProcessor {
 	FeedRepository feedRepo;
 	
 	@Autowired
-	private ObjectMapper objectMapper;
-	
-	
-	
+	CustomObjectMapper objectMapper;
+
 	public static Calendar calendar = Calendar.getInstance();
-	
-	public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+	public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 	public void processKafkaMessage(Message<String> message) {
 
@@ -40,7 +39,7 @@ public class MessageProcessor {
 	}
 
 	public <K, V> void processKafkaMessage(Map<String, String> payload) throws InterruptedException {
-		String key = null;
+		// String key = null;
 		// for (K item : payload.keySet()) {
 		// key = (String) item;
 		// }
@@ -59,6 +58,7 @@ public class MessageProcessor {
 	public void processKafkaVoteMessage(Map<String, Map<Integer, List<String>>> payload) {
 		String key = null;
 		String ip, md5, url = null;
+		String dateTime = null;
 		Feed tmpFeed = null;
 		for (String item : payload.keySet()) {
 			key = (String) item;
@@ -76,50 +76,61 @@ public class MessageProcessor {
 
 					JsonNode node = null;
 					try {
-						node = objectMapper.readTree(v);
+						node = CustomObjectMapper.getInstance().readTree(v);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
-					if (node.has("origin")) {
+					dateTime = node.get("dateTime").asText();
+					// ip
+					if (node.get("origin").has("ip")) {
 						ip = node.get("origin").get("ip").asText();
 						tmpFeed = feedRepo.findFeed(ip);
 						if (tmpFeed != null) {
 							System.out.println("FOUND IT!:" + tmpFeed.getIndicator());
-							tmpFeed.setLastSeen(node.get("dateTime").asText());
+							tmpFeed.setLastSeen(dateTime);
 							feedRepo.updateFeed(tmpFeed);
 						} else {
-							tmpFeed = new Feed(ip, "ip", node.get("dateTime").asText(), node.get("dateTime").asText(), format.format(calendar.getTime()));
+							tmpFeed = new Feed(ip, "ip", dateTime, dateTime, dateFormat.format(calendar.getTime()));
 							feedRepo.saveFeed(tmpFeed);
 						}
 						System.out.println("IP [" + ip + "]");
 					}
+
+					// download
 					if (node.has("download")) {
-						md5 = node.get("download").get(0).get("md5Hash").asText();
-						
+						// in case of ssh
+						if (node.get("download").isArray()) {
+							md5 = node.get("download").get(0).get("md5Hash").asText();
+							url = node.get("download").get(0).get("url").asText();
+						}
+						// in case of smb
+						else {
+							md5 = node.get("download").get("md5Hash").asText();
+							url = node.get("download").get("url").asText();
+						}
+
 						tmpFeed = feedRepo.findFeed(md5);
 						if (tmpFeed != null) {
 							System.out.println("FOUND IT!:" + tmpFeed.getIndicator());
-							tmpFeed.setLastSeen(node.get("dateTime").asText());
+							tmpFeed.setLastSeen(dateTime);
 							feedRepo.updateFeed(tmpFeed);
 						} else {
-							tmpFeed = new Feed(md5, "md5", node.get("dateTime").asText(), node.get("dateTime").asText(), new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(Calendar.getInstance().getTime()));
+							tmpFeed = new Feed(md5, "md5", dateTime, dateTime, dateFormat.format(calendar.getTime()));
 							feedRepo.saveFeed(tmpFeed);
 						}
-						//url
-						url = node.get("download").get(0).get("url").asText();
+
+						// url
 						tmpFeed = feedRepo.findFeed(url);
 						if (tmpFeed != null) {
 							System.out.println("FOUND IT!:" + tmpFeed.getIndicator());
-							tmpFeed.setLastSeen(node.get("dateTime").asText());
+							tmpFeed.setLastSeen(dateTime);
 							feedRepo.updateFeed(tmpFeed);
 						} else {
-							tmpFeed = new Feed(md5, "url", node.get("dateTime").asText(), node.get("dateTime").asText(), new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(Calendar.getInstance().getTime()));
+							tmpFeed = new Feed(md5, "url", dateTime, dateTime, dateFormat.format(calendar.getTime()));
 							feedRepo.saveFeed(tmpFeed);
 						}
-						
-						System.out.println("md5 [" + md5 + "], url [" + url + "]");
+						System.out.println("MD5 [" + md5 + "], url [" + url + "]");
 
 					}
 				}

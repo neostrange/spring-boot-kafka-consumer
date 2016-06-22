@@ -24,8 +24,6 @@ public class Feed implements Serializable {
 		IP, MD5, URL
 	};
 
-//	private String id;
-
 	private String indicator;
 
 	private String type;
@@ -64,6 +62,7 @@ public class Feed implements Serializable {
 		this.type = type;
 		this.firstSeen = firstSeen;
 		this.lastSeen = lastSeen;
+		this.incidentStats = new IncidentStats();
 	}
 
 	public String getIndicator() {
@@ -185,13 +184,5 @@ public class Feed implements Serializable {
 	public void setSuggestedCOA(SuggestedCOA suggestedCOA) {
 		this.suggestedCOA = suggestedCOA;
 	}
-
-//	public String getId() {
-//		return id;
-//	}
-//
-//	public void setId(String id) {
-//		this.id = id;
-//	}
 
 }

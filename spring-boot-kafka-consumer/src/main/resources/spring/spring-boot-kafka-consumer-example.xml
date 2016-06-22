@@ -88,6 +88,6 @@
 
 
 
-	<bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+	<bean id="objectMapper" class="com.example.utils.CustomObjectMapper" />
 
 </beans>
