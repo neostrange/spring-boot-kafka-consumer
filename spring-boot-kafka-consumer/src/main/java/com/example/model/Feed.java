@@ -62,7 +62,6 @@ public class Feed implements Serializable {
 		this.firstSeen = firstSeen;
 		this.lastSeen = lastSeen;
 		this.timestamp = timestamp;
-		this.incidentStats = new IncidentStats();
 	}
 
 	public String getIndicator() {

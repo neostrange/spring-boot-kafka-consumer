@@ -28,9 +28,9 @@ public class ThreatType implements Serializable {
 		this.malware = false;
 		this.web = false;
 		this.sip = false;
-		this.bruteForce = true;
+		this.bruteForce = false;
 		this.db = false;
-		this.possibleCompromise = true;
+		this.possibleCompromise = false;
 	}
 
 	public boolean isRecon() {
@@ -87,6 +87,38 @@ public class ThreatType implements Serializable {
 
 	public void setDb(boolean db) {
 		this.db = db;
+	}
+	
+	public void update(String category){
+		switch (category) {
+		case "Reconnaissance":
+			this.setRecon(true);
+			break;
+		case "Malware":
+			this.setMalware(true);
+			break;
+		case "Web Attack":
+			this.setWeb(true);
+			break;
+		case "SIP Attack":
+			this.setSip(true);
+			break;
+		case "DB-MSSQL Attack":
+			this.setDb(true);
+			break;
+		case "DB-MYSQL Attack":
+			this.setDb(true);
+			break;
+		case "SSH Brute-Force Attempt":
+			this.setBruteForce(true);
+			break;
+		case "SSH Possible Compromise":
+			this.setPossibleCompromise(true);
+			break;
+		default:
+			this.setRecon(true);
+		}
+
 	}
 	
 	

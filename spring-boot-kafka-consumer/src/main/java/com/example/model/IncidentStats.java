@@ -4,7 +4,10 @@ import java.io.Serializable;
 
 public class IncidentStats implements Serializable {
 
-	private static final double serialVersionUID = 1L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5925199224651437928L;
 
 	private double sev1;
 
@@ -116,11 +119,31 @@ public class IncidentStats implements Serializable {
 	}
 
 	public double riskAverage() {
-		// return ((sev1/total * ( 10 * 10) + sev2/total * (10 * 20) +
-		// sev3/total * ( 10 * 30) + sev4/total * (10 * 40) + sev5/total * (10 *
-		// 50))/(50));
-		return (sev1 * (5*1) + sev2 * (5*2) + sev3 * (5*3) + sev4 * (5*4) + sev5 * (5*5))/(5*total);
+		return (sev1 * (5 * 1) + sev2 * (5 * 2) + sev3 * (5 * 3) + sev4 * (5 * 4) + sev5 * (5 * 5)) / (5 * total);
 
+	}
+
+	public void update(int score) {
+		switch (score) {
+		case 1:
+			this.incrSev1();
+			break;
+		case 2:
+			this.incrSev2();
+			break;
+		case 3:
+			this.incrSev3();
+			break;
+		case 4:
+			this.incrSev4();
+			break;
+		case 5:
+			this.incrSev5();
+			break;
+		default:
+			this.incrSev1();
+		}
+		this.incrTotal();
 	}
 
 }

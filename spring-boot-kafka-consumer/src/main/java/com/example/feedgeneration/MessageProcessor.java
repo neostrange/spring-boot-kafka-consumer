@@ -14,6 +14,7 @@ import org.springframework.integration.annotation.ServiceActivator;
 
 import com.example.dao.FeedRepository;
 import com.example.model.Feed;
+import com.example.model.IncidentStats;
 import com.example.model.ThreatType;
 import com.example.utils.CustomObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -66,7 +67,6 @@ public class MessageProcessor {
 					category = node.has("category") ? node.get("category").asText() : "Reconnaissance";
 					dateTime = node.get("dateTime").asText();
 					severity = (int) node.get("severityScore").asDouble();
-					log.info(">>>>SEVERITY [{}]", severity);
 					// dateTime = dateFormat.format(dateTime);
 
 					// ip
@@ -77,15 +77,17 @@ public class MessageProcessor {
 						if (tmpFeed != null) {
 							log.debug("Feed with ip [{}] exists", tmpFeed.getIndicator());
 							tmpFeed.setLastSeen(dateTime);
-							tmpFeed.setThreatType(feedGen.getThreatType(category, tmpFeed.getThreatType()));
-							tmpFeed.setIncidentStats(feedGen.updateStats(severity, tmpFeed.getIncidentStats()));
+							tmpFeed.getThreatType().update(category);
+							tmpFeed.getIncidentStats().update(severity);
 							tmpFeed = feedGen.evaluateFeed(tmpFeed);
 							tmpFeed.setTimestamp(dateFormat.format(calendar.getTime()));
 							feedRepo.updateFeed(tmpFeed);
 						} else {
 							tmpFeed = new Feed(ip, "ip", dateTime, dateTime, dateFormat.format(calendar.getTime()));
-							tmpFeed.setThreatType(feedGen.getThreatType(category, new ThreatType()));
-							tmpFeed.setIncidentStats(feedGen.updateStats(severity, tmpFeed.getIncidentStats()));
+							tmpFeed.setIncidentStats(new IncidentStats());
+							tmpFeed.setThreatType(new ThreatType());
+							tmpFeed.getThreatType().update(category);
+							tmpFeed.getIncidentStats().update(severity);
 							tmpFeed = feedGen.evaluateFeed(tmpFeed);
 							feedRepo.saveFeed(tmpFeed);
 						}
@@ -144,7 +146,6 @@ public class MessageProcessor {
 						} else {
 
 							tmpFeed = new Feed(url, "url", dateTime, dateTime, dateFormat.format(calendar.getTime()));
-							tmpFeed.setThreatType(feedGen.getThreatType(category, new ThreatType()));
 							// tmpFeed.setIncidentStats(updateStats(severity,
 							// tmpFeed.getIncidentStats()));
 							// tmpFeed = evaluateFeed(tmpFeed);
