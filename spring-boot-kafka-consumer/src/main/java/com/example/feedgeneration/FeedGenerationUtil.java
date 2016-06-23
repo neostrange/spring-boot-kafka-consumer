@@ -10,8 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.example.model.Feed;
-import com.example.model.IncidentStats;
-import com.example.model.ThreatType;
 
 public class FeedGenerationUtil {
 

@@ -59,12 +59,11 @@ public class MessageProcessor {
 						e.printStackTrace();
 					}
 
-					category = node.has("category") ? node.get("category").asText() : "Reconnaissance";
-					dateTime = node.get("dateTime").asText();
-					severity = (int) node.get("severityScore").asDouble();
-
 					// ip
 					if (node.get("origin").has("ip")) {
+						category = node.has("category") ? node.get("category").asText() : "Reconnaissance";
+						dateTime = node.get("dateTime").asText();
+						severity = (int) node.get("severityScore").asDouble();
 						ip = node.get("origin").get("ip").asText();
 						log.debug("Feed IP [" + ip + "]");
 						tmpFeed = feedRepo.findFeed(ip);
