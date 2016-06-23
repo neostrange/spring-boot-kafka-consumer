@@ -54,7 +54,7 @@ public class MessageProcessor {
 
 					node = null;
 					try {
-						node = CustomObjectMapper.getInstance().readTree(v);
+						node = CustomObjectMapper.getInstance().readTree(v).get("source");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
