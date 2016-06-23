@@ -46,7 +46,7 @@ public class FeedGenerationUtil {
 	 * @param feed
 	 * @return
 	 */
-	public Feed evaluateFeed(Feed feed) {
+	public static Feed evaluateFeed(Feed feed) {
 		double total = feed.getIncidentStats().getTotal();
 		double relThreshold = 1000;
 		double duration = 0;

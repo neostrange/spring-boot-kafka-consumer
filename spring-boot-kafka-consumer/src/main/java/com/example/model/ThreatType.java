@@ -2,6 +2,8 @@ package com.example.model;
 
 import java.io.Serializable;
 
+import com.example.feedgeneration.Constants;
+
 public class ThreatType implements Serializable {
 	
 	/**
@@ -91,28 +93,28 @@ public class ThreatType implements Serializable {
 	
 	public void update(String category){
 		switch (category) {
-		case "Reconnaissance":
+		case Constants.RECONNAISSANCE:
 			this.setRecon(true);
 			break;
-		case "Malware":
+		case Constants.MALWARE:
 			this.setMalware(true);
 			break;
-		case "Web Attack":
+		case Constants.WEB_ATTACK:
 			this.setWeb(true);
 			break;
-		case "SIP Attack":
+		case Constants.SIP_ATTACK:
 			this.setSip(true);
 			break;
-		case "DB-MSSQL Attack":
+		case Constants.DB_MSSQL_ATTACK:
 			this.setDb(true);
 			break;
-		case "DB-MYSQL Attack":
+		case Constants.DB_MYSQL_ATTACK:
 			this.setDb(true);
 			break;
-		case "SSH Brute-Force Attempt":
+		case Constants.SSH_BRUTE_FORCE:
 			this.setBruteForce(true);
 			break;
-		case "SSH Possible Compromise":
+		case Constants.SSH_POSSIBLE_COMPROMISE:
 			this.setPossibleCompromise(true);
 			break;
 		default:

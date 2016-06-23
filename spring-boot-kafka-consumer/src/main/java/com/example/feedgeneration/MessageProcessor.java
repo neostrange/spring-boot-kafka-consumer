@@ -29,8 +29,6 @@ public class MessageProcessor {
 	@Autowired
 	CustomObjectMapper objectMapper;
 	
-	FeedGenerationUtil feedGen = new FeedGenerationUtil();
-
 	public static Calendar calendar = Calendar.getInstance();
 
 	public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -67,7 +65,6 @@ public class MessageProcessor {
 					category = node.has("category") ? node.get("category").asText() : "Reconnaissance";
 					dateTime = node.get("dateTime").asText();
 					severity = (int) node.get("severityScore").asDouble();
-					// dateTime = dateFormat.format(dateTime);
 
 					// ip
 					if (node.get("origin").has("ip")) {
@@ -79,8 +76,8 @@ public class MessageProcessor {
 							tmpFeed.setLastSeen(dateTime);
 							tmpFeed.getThreatType().update(category);
 							tmpFeed.getIncidentStats().update(severity);
-							tmpFeed = feedGen.evaluateFeed(tmpFeed);
-							tmpFeed.setTimestamp(dateFormat.format(calendar.getTime()));
+							tmpFeed = FeedGenerationUtil.evaluateFeed(tmpFeed);
+							tmpFeed.setTimestamp(FeedGenerationUtil.dateFormat.format(calendar.getTime()));
 							feedRepo.updateFeed(tmpFeed);
 						} else {
 							tmpFeed = new Feed(ip, "ip", dateTime, dateTime, dateFormat.format(calendar.getTime()));
@@ -88,7 +85,7 @@ public class MessageProcessor {
 							tmpFeed.setThreatType(new ThreatType());
 							tmpFeed.getThreatType().update(category);
 							tmpFeed.getIncidentStats().update(severity);
-							tmpFeed = feedGen.evaluateFeed(tmpFeed);
+							tmpFeed = FeedGenerationUtil.evaluateFeed(tmpFeed);
 							feedRepo.saveFeed(tmpFeed);
 						}
 						
@@ -113,21 +110,11 @@ public class MessageProcessor {
 						if (tmpFeed != null) {
 							log.debug("Feed with md5 [{}] exists", tmpFeed.getIndicator());
 							tmpFeed.setLastSeen(dateTime);
-							// tmpFeed.setThreatType(getThreatType(category,
-							// tmpFeed.getThreatType()));
-							// tmpFeed.setIncidentStats(updateStats(severity,
-							// tmpFeed.getIncidentStats()));
 							tmpFeed.setTimestamp(dateFormat.format(calendar.getTime()));
-							// tmpFeed = evaluateFeed(tmpFeed);
 							feedRepo.updateFeed(tmpFeed);
 						} else {
 							tmpFeed = new Feed(md5, "md5", dateTime, dateTime, dateFormat.format(calendar.getTime()));
-							// tmpFeed.setIncidentStats(updateStats(severity,
-							// tmpFeed.getIncidentStats()));
-							// tmpFeed.setThreatType(getThreatType(category, new
-							// ThreatType()));
 							tmpFeed.setTimestamp(dateFormat.format(calendar.getTime()));
-							// tmpFeed = evaluateFeed(tmpFeed);
 							feedRepo.saveFeed(tmpFeed);
 						}
 
@@ -136,19 +123,11 @@ public class MessageProcessor {
 						if (tmpFeed != null) {
 							log.debug("Feed with url [{}] exists", tmpFeed.getIndicator());
 							tmpFeed.setLastSeen(dateTime);
-							// tmpFeed.setThreatType(getThreatType(category,
-							// tmpFeed.getThreatType()));
-							// tmpFeed.setIncidentStats(updateStats(severity,
-							// tmpFeed.getIncidentStats()));
-							// tmpFeed = evaluateFeed(tmpFeed);
 							tmpFeed.setTimestamp(dateFormat.format(calendar.getTime()));
 							feedRepo.updateFeed(tmpFeed);
 						} else {
 
 							tmpFeed = new Feed(url, "url", dateTime, dateTime, dateFormat.format(calendar.getTime()));
-							// tmpFeed.setIncidentStats(updateStats(severity,
-							// tmpFeed.getIncidentStats()));
-							// tmpFeed = evaluateFeed(tmpFeed);
 							feedRepo.saveFeed(tmpFeed);
 						}
 						System.out.println("MD5 [" + md5 + "], URL [" + url + "]");
