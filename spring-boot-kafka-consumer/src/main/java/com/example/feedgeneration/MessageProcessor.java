@@ -29,9 +29,6 @@ public class MessageProcessor {
 	@Autowired
 	CustomObjectMapper objectMapper;
 	
-	public static Calendar calendar = Calendar.getInstance();
-
-	public static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	
 	@ServiceActivator
 	public void processKafkaVoteMessage(Map<String, Map<Integer, List<String>>> payload) {
@@ -77,10 +74,10 @@ public class MessageProcessor {
 							tmpFeed.getThreatType().update(category);
 							tmpFeed.getIncidentStats().update(severity);
 							tmpFeed = FeedGenerationUtil.evaluateFeed(tmpFeed);
-							tmpFeed.setTimestamp(FeedGenerationUtil.dateFormat.format(calendar.getTime()));
+							tmpFeed.setTimestamp(FeedGenerationUtil.dateFormat.format(FeedGenerationUtil.calendar.getTime()));
 							feedRepo.updateFeed(tmpFeed);
 						} else {
-							tmpFeed = new Feed(ip, "ip", dateTime, dateTime, dateFormat.format(calendar.getTime()));
+							tmpFeed = new Feed(ip, "ip", dateTime, dateTime, FeedGenerationUtil.dateFormat.format(FeedGenerationUtil.calendar.getTime()));
 							tmpFeed.setIncidentStats(new IncidentStats());
 							tmpFeed.setThreatType(new ThreatType());
 							tmpFeed.getThreatType().update(category);
@@ -110,11 +107,11 @@ public class MessageProcessor {
 						if (tmpFeed != null) {
 							log.debug("Feed with md5 [{}] exists", tmpFeed.getIndicator());
 							tmpFeed.setLastSeen(dateTime);
-							tmpFeed.setTimestamp(dateFormat.format(calendar.getTime()));
+							tmpFeed.setTimestamp(FeedGenerationUtil.dateFormat.format(FeedGenerationUtil.calendar.getTime()));
 							feedRepo.updateFeed(tmpFeed);
 						} else {
-							tmpFeed = new Feed(md5, "md5", dateTime, dateTime, dateFormat.format(calendar.getTime()));
-							tmpFeed.setTimestamp(dateFormat.format(calendar.getTime()));
+							tmpFeed = new Feed(md5, "md5", dateTime, dateTime, FeedGenerationUtil.dateFormat.format(FeedGenerationUtil.calendar.getTime()));
+							tmpFeed.setTimestamp(FeedGenerationUtil.dateFormat.format(FeedGenerationUtil.calendar.getTime()));
 							feedRepo.saveFeed(tmpFeed);
 						}
 
@@ -123,11 +120,11 @@ public class MessageProcessor {
 						if (tmpFeed != null) {
 							log.debug("Feed with url [{}] exists", tmpFeed.getIndicator());
 							tmpFeed.setLastSeen(dateTime);
-							tmpFeed.setTimestamp(dateFormat.format(calendar.getTime()));
+							tmpFeed.setTimestamp(FeedGenerationUtil.dateFormat.format(FeedGenerationUtil.calendar.getTime()));
 							feedRepo.updateFeed(tmpFeed);
 						} else {
 
-							tmpFeed = new Feed(url, "url", dateTime, dateTime, dateFormat.format(calendar.getTime()));
+							tmpFeed = new Feed(url, "url", dateTime, dateTime, FeedGenerationUtil.dateFormat.format(FeedGenerationUtil.calendar.getTime()));
 							feedRepo.saveFeed(tmpFeed);
 						}
 						System.out.println("MD5 [" + md5 + "], URL [" + url + "]");
