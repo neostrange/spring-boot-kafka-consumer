@@ -1,6 +1,8 @@
 package com.example.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.Period;
 
 public class Feed implements Serializable {
 
@@ -26,16 +28,16 @@ public class Feed implements Serializable {
 	private String type;
 
 	private String title;
-
+	
 	private String description;
 
-	private String firstSeen;
+	private LocalDateTime firstSeen;
 
-	private String lastSeen;
+	private LocalDateTime lastSeen;
 
-	private String timestamp;
+	private LocalDateTime timestamp;
 
-	private String validityPeriod;
+	private Period validityPeriod;
 
 	private double riskFactor;
 
@@ -55,8 +57,13 @@ public class Feed implements Serializable {
 
 	public Feed() {
 	}
+	
+	public Feed(String indicator, String type) {
+		this.indicator = indicator;
+		this.type = type;
+	}
 
-	public Feed(String indicator, String type, String firstSeen, String lastSeen, String timestamp) {
+	public Feed(String indicator, String type, LocalDateTime firstSeen, LocalDateTime lastSeen, LocalDateTime timestamp) {
 		this.indicator = indicator;
 		this.type = type;
 		this.firstSeen = firstSeen;
@@ -96,36 +103,35 @@ public class Feed implements Serializable {
 		this.description = description;
 	}
 
-		
-	public String getFirstSeen() {
+	public LocalDateTime getFirstSeen() {
 		return firstSeen;
 	}
 
-	public void setFirstSeen(String firstSeen) {
+	public void setFirstSeen(LocalDateTime firstSeen) {
 		this.firstSeen = firstSeen;
 	}
 
-	public String getLastSeen() {
+	public LocalDateTime getLastSeen() {
 		return lastSeen;
 	}
 
-	public void setLastSeen(String lastSeen) {
+	public void setLastSeen(LocalDateTime lastSeen) {
 		this.lastSeen = lastSeen;
 	}
 
-	public String getTimestamp() {
+	public LocalDateTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(String timestamp) {
+	public void setTimestamp(LocalDateTime timestamp) {
 		this.timestamp = timestamp;
 	}
 
-	public String getValidityPeriod() {
+	public Period getValidityPeriod() {
 		return validityPeriod;
 	}
 
-	public void setValidityPeriod(String validityPeriod) {
+	public void setValidityPeriod(Period validityPeriod) {
 		this.validityPeriod = validityPeriod;
 	}
 
