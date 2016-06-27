@@ -59,7 +59,7 @@ public class FeedGenerationUtil {
 		}
 
 		log.info("confidence [{}]", confidence);
-		feed.setExpiry(ZonedDateTime.now(ZoneId.of("UTC")).plus(valPeriod));
+		feed.setExpiry(LocalDateTime.now(ZoneId.of("UTC")).plus(valPeriod));
 		log.info("Feed expiry [{}]",feed.getExpiry().toString());
 		feed.setConfidence(confidence * 100);
 		feed.setRiskFactor((feed.getIncidentStats().riskAverage() / 5) * 10);

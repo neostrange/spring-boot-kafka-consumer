@@ -37,7 +37,7 @@ public class Feed implements Serializable {
 
 	private LocalDateTime timestamp;
 	
-	private ZonedDateTime expiry;
+	private LocalDateTime expiry;
 
 	private double riskFactor;
 
@@ -129,11 +129,11 @@ public class Feed implements Serializable {
 	}
 
 
-	public ZonedDateTime getExpiry() {
+	public LocalDateTime getExpiry() {
 		return expiry;
 	}
 
-	public void setExpiry(ZonedDateTime expiry) {
+	public void setExpiry(LocalDateTime expiry) {
 		this.expiry = expiry;
 	}
 
