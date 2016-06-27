@@ -1,14 +1,11 @@
 package com.example.feedgeneration;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +22,6 @@ public class FeedGenerationUtil {
 
 	public static final double CONVERSION_CONSTANT = 1000 * 60 * 60 * 24;
 
-	
 	/**
 	 * 
 	 * @param feed
@@ -63,9 +59,10 @@ public class FeedGenerationUtil {
 		}
 
 		log.info("confidence [{}]", confidence);
-		feed.setValidityPeriod(valPeriod);
+		feed.setExpiry(ZonedDateTime.now(ZoneId.of("UTC")).plus(valPeriod));
+		log.info("Feed expiry [{}]",feed.getExpiry().toString());
 		feed.setConfidence(confidence * 100);
-		feed.setRiskFactor(feed.getIncidentStats().riskAverage());
+		feed.setRiskFactor((feed.getIncidentStats().riskAverage() / 5) * 10);
 		return feed;
 
 	}

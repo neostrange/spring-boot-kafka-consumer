@@ -2,7 +2,7 @@ package com.example.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.Period;
+import java.time.ZonedDateTime;
 
 public class Feed implements Serializable {
 
@@ -28,7 +28,7 @@ public class Feed implements Serializable {
 	private String type;
 
 	private String title;
-	
+
 	private String description;
 
 	private LocalDateTime firstSeen;
@@ -36,8 +36,8 @@ public class Feed implements Serializable {
 	private LocalDateTime lastSeen;
 
 	private LocalDateTime timestamp;
-
-	private Period validityPeriod;
+	
+	private ZonedDateTime expiry;
 
 	private double riskFactor;
 
@@ -50,20 +50,21 @@ public class Feed implements Serializable {
 	private String tlpLevel;
 
 	private TTPType ttpType;
-	
+
 	private ThreatType threatType;
 
 	private SuggestedCOA suggestedCOA;
 
 	public Feed() {
 	}
-	
+
 	public Feed(String indicator, String type) {
 		this.indicator = indicator;
 		this.type = type;
 	}
 
-	public Feed(String indicator, String type, LocalDateTime firstSeen, LocalDateTime lastSeen, LocalDateTime timestamp) {
+	public Feed(String indicator, String type, LocalDateTime firstSeen, LocalDateTime lastSeen,
+			LocalDateTime timestamp) {
 		this.indicator = indicator;
 		this.type = type;
 		this.firstSeen = firstSeen;
@@ -127,12 +128,13 @@ public class Feed implements Serializable {
 		this.timestamp = timestamp;
 	}
 
-	public Period getValidityPeriod() {
-		return validityPeriod;
+
+	public ZonedDateTime getExpiry() {
+		return expiry;
 	}
 
-	public void setValidityPeriod(Period validityPeriod) {
-		this.validityPeriod = validityPeriod;
+	public void setExpiry(ZonedDateTime expiry) {
+		this.expiry = expiry;
 	}
 
 	public double getRiskFactor() {
@@ -182,7 +184,7 @@ public class Feed implements Serializable {
 	public void setTtpType(TTPType ttpType) {
 		this.ttpType = ttpType;
 	}
-	
+
 	public ThreatType getThreatType() {
 		return threatType;
 	}
@@ -198,7 +200,5 @@ public class Feed implements Serializable {
 	public void setSuggestedCOA(SuggestedCOA suggestedCOA) {
 		this.suggestedCOA = suggestedCOA;
 	}
-
-
 
 }

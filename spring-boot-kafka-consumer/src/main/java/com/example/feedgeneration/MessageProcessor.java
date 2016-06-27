@@ -1,18 +1,10 @@
 package com.example.feedgeneration;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +29,7 @@ public class MessageProcessor {
 	CustomObjectMapper objectMapper;
 
 	@ServiceActivator
-	public void processKafkaVoteMessage(Map<String, Map<Integer, List<String>>> payload) {
+	public void processKafkaMessage(Map<String, Map<Integer, List<String>>> payload) {
 		JsonNode node;
 		String key = null;
 		String ip, md5, url = null;
@@ -63,11 +55,11 @@ public class MessageProcessor {
 					try {
 						node = CustomObjectMapper.getInstance().readTree(v).get("source");
 					} catch (IOException e) {
-						e.printStackTrace();
+						log.error("", e);
 					}
 
 					//is Incident?
-					if (node.get("origin").isContainerNode()) {
+					if (node.has("origin")) {
 						
 						category = node.has("category") ? node.get("category").asText() : "Reconnaissance";
 						dateTime = node.get("dateTime").asText();
