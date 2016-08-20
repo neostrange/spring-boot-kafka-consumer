@@ -29,7 +29,7 @@ public class MessageProcessor {
 	CustomObjectMapper objectMapper;
 
 	@ServiceActivator
-	public void processKafkaVoteMessage(Map<String, Map<Integer, List<String>>> payload) {
+	public void processKafkaMessage(Map<String, Map<Integer, List<String>>> payload) {
 		JsonNode node;
 		String key = null;
 		String ip, md5, url = null;
@@ -55,11 +55,11 @@ public class MessageProcessor {
 					try {
 						node = objectMapper.readTree(v).get("source");
 					} catch (IOException e) {
-						e.printStackTrace();
+						log.error("", e);
 					}
 
 					//is Incident?
-					if (node.get("origin").isContainerNode()) {
+					if (node.has("origin")) {
 						
 						category = node.has("category") ? node.get("category").asText() : "Reconnaissance";
 						dateTime = node.get("dateTime").asText();
