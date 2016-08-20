@@ -1,14 +1,9 @@
 package com.example.feedgeneration;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +40,8 @@ public class FeedGenerationUtil {
 		confidence = confidence > 1 ? 0.4 : confidence * 0.4;
 
 		// age in days
-		duration = dur.toDays();
-
+		duration = dur.abs().toDays();
+		log.info("Duration {}", duration);
 		// age
 		// activity state
 		if (duration < 30) {

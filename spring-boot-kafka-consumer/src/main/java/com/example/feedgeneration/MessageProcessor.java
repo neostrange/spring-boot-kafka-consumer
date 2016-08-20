@@ -1,18 +1,10 @@
 package com.example.feedgeneration;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +53,7 @@ public class MessageProcessor {
 
 					node = null;
 					try {
-						node = CustomObjectMapper.getInstance().readTree(v).get("source");
+						node = objectMapper.readTree(v).get("source");
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
